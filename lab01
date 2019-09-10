@@ -1,0 +1,74 @@
+from sympy import * 
+import numpy as np
+x, y, z = symbols('x,y,z') 
+
+def gcd(a, b): 
+
+    x, xx, y, yy = 1, 0, 0, 1 
+
+    while b:    
+        q = a // b 
+        a, b = b, a % b 
+        x, xx = xx, x - xx*q 
+        y, yy = yy, y - yy*q 
+    return (a, x, y) 
+
+def gcd_rec(a, b): 
+
+    if not b: 
+        return (a, 1, 0) 
+    g, y, x = gcd_rec(b, a % b) 
+    return (g, x, y - (a // b) * x) 
+
+
+a = 5*x**3 + 3*x**2
+b = 3*x**2 + 2*x**1
+
+def gcd_poly_it(a, b):
+    
+    x, xx, y, yy = 1, 0, 0, 1 
+
+    while b:    
+        w, z = div(a, b)
+        q = w
+        a, b = b, z 
+        x, xx = xx, x - xx*q 
+        y, yy = yy, y - yy*q 
+    return (a, x, y)  
+
+def gcd_poly_rec(a, b):
+
+    if not b: 
+        return (a, 1, 0)
+    w, z = div(a, b)
+    g, y, x = gcd_poly_rec(b, z)
+    return (g, x, y - (w) * x) 
+    
+def gcd_rec(a, b):
+    if not b:
+        return (a, 1, 0)
+    g, x, y = gcd_rec(b, a % b)
+    return (g, y, x - (a // b) * y)
+
+def func(a, n):
+    f, b, c = gcd_rec(a, n)
+    if f == 1:
+        return b % n
+    else:
+        return None
+
+def gcd_rec(a, b):
+
+    if not b:
+        return (a, 1, 0)
+    g, x, y = gcd_rec(b, a % b)
+    return (g, y, x - (a // b) * y)
+
+def func(a, n):
+    f, b, c = gcd_rec(a, n)
+    if f == 1:
+        return b % n
+    else:
+        return None
+
+
